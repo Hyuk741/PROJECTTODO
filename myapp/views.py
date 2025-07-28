@@ -9,7 +9,7 @@ from myapp.forms import TodoForm, TodoUpdateForm
 from myapp.models import Todo
 from django.urls import reverse
 
-
+@login_required()
 def todo_list(request):
     todo_list = Todo.objects.filter(user=request.user).order_by('created_at')
     q = request.GET.get('q')
@@ -31,7 +31,7 @@ def todo_list(request):
 
 @login_required()
 def todo_create(request):
-    form = TodoForm(request.Post or None)
+    form = TodoForm(request.POST or None)
     if form.is_valid():
         todo = form.save(commit=False)
         todo.user = request.user
@@ -40,7 +40,14 @@ def todo_create(request):
     context = {
         'form': form
     }
-    return render(request, '/todo_create.html', context)
+    return render(request, 'todo_create.html', context)
+@login_required()
+def todo_info(request, todo_id):
+    todo = get_object_or_404(Todo, id=todo_id)
+    context = {
+        'todo': todo.__dict__
+    }
+    return render(request, 'todo_info.html', context)
 
 @login_required()
 def todo_update(request):
@@ -52,7 +59,7 @@ def todo_update(request):
     context = {
         'form': form
     }
-    return render(request, '/todo_update.html', context)
+    return render(request, 'todo_update.html', context)
 
 
 @login_required()

@@ -1,6 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.shortcuts import render, get_object_or_404, redirect
 
 from myapp.models import Todo
+
 
 
 def todo_list(request):
@@ -16,4 +18,6 @@ def todo_list(request):
 def todo_detail(request, todo_id):
     todo = get_object_or_404(Todo, id=todo_id)
     return render(request, 'todo_detail.html', {'todo': todo})
+
+
 

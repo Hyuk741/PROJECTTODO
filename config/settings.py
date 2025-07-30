@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myapp',
     'member',
-    'django_extensions',
-]
+    'django_extensions'
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -105,7 +105,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'ko-KR'
+LANGUAGE_CODE = 'ko-Ko'
 
 TIME_ZONE = 'UTC'
 
@@ -124,5 +124,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/todo/'
+LOGIN_REDIRECT_URL = 'cbv/todo/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'

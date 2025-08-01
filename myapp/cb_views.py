@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from myapp.forms import CommentForm
+from myapp.forms import CommentForm, TodoForm, TodoUpdateForm
 from myapp.models import Todo, Comment
 
 
@@ -49,8 +49,8 @@ class TodoDetailView(LoginRequiredMixin, DetailView):
 
 class TodoUpdateView(LoginRequiredMixin, UpdateView):
     model = Todo
-    fields = ['title', 'description', 'start_date', 'end_date', 'is_completed', 'id']
     template_name = 'todo_update.html'
+    form_class = TodoUpdateForm
 
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
@@ -77,13 +77,15 @@ class TodoDeleteView(LoginRequiredMixin, DeleteView):
 
 class TodoCreateView(LoginRequiredMixin, CreateView):
     model = Todo
-    fields = ['title', 'description', 'start_date', 'end_date']
     template_name = 'todo_create.html'
+    form_class = TodoForm
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
     def get_success_url(self):
         return reverse_lazy('cbv_todo_info', kwargs={'pk': self.object.id})
 
